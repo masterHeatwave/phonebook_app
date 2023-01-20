@@ -24,8 +24,48 @@ frame_up.grid(row=0, column=0, padx=0, pady=1)
 frame_down = Frame(window, width=600, height=150, bg=white)
 frame_down.grid(row=1, column=0, padx=0, pady=1)
 
-frame_table = Frame(window, width=600, height=100, bg=blue)
-frame_table.grid(row=2, column=0, columnspan=2, padx=0, pady=1)
+frame_table = Frame(window, width=600, height=100, bg=white)
+frame_table.grid(row=2, column=0, columnspan=2, padx=0, pady=1, sticky=NW)
+
+
+# creating a table to show the data
+def show():
+
+    global tree
+
+    listheader = ['Name', 'Telephone', 'E-mail']
+
+    demo_list = [['Someone', '1123581321', 'someones@gmail.com']]
+
+    tree = ttk.Treeview(frame_table, selectmode="extended", columns=listheader, show="headings")
+
+    vsb = ttk.Scrollbar(frame_table, orient="vertical", command=tree.yview)
+    hsb = ttk.Scrollbar(frame_table, orient="horizontal", command=tree.xview)
+
+    tree.configure(yscrollcommand=vsb.set, xscrollcommand=hsb.set)
+
+    tree.grid(column=0, row=0, sticky='nsew')
+    vsb.grid(column=1, row=0, sticky='ns')
+    hsb.grid(column=0, row=1, sticky='ew')
+
+    # tree head
+
+    tree.heading(0, text='Name', anchor=NW)
+    tree.heading(1, text='Telephone', anchor=NW)
+    tree.heading(2, text='E-mail', anchor=NW)
+
+    # tree column
+
+    tree.column(0, width=120, anchor='nw')
+    tree.column(1, width=120, anchor='nw')
+    tree.column(2, width=160, anchor='nw')
+
+    for item in demo_list:
+        tree.insert('', 'end', values=item)
+
+
+show()
+
 
 # frame_up widgets
 
